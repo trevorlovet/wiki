@@ -10,12 +10,19 @@ soup = BeautifulSoup(page.content, 'html.parser')
 
 results = soup.find(id='mp-tfa')
 
-linkinfo = results.find_all('a')
+#Getting All Links
+link_info = results.find_all('a')
 
-mainTitle = (linkinfo[1])
+mainTitle = (link_info[1])
 
-print("Todays Wikipedia Article is about: " + mainTitle.string)
+# To block out for unwanted words -- only works for the final two
+do_not_print = ["None", "By email", "More featured articles", "Archive", "Full article..."]
+
+print("Today's Wikipedia Article is about: " + mainTitle.string)
 
 print("Other Topics include:   ")
-for linkinfo in linkinfo:
-    print((linkinfo.string) )
+for link_info in link_info:
+    if link_info.string in do_not_print:
+        continue
+    else:
+        print(link_info.string)
